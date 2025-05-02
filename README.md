@@ -4,17 +4,13 @@ Este microservicio se encarga de la gestión del catálogo de productos, permiti
 📦 Tecnologías
 Java 17+
 
-Spring Boot 3
-
-Spring Web
+Spring Boot 
 
 Spring Data JPA
 
 PostgreSQL (Neon Database)
 
 Maven
-
-Docker (opcional)
 
 Lombok
 
