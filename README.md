@@ -1,39 +1,52 @@
-#🛒 Microservicio de Gestión de Productos
+# 🛒 Microservicio de Gestión de Productos
 
-Este microservicio se encarga de la gestión del catálogo de productos, permitiendo crear, editar, consultar y eliminar productos. Forma parte de una arquitectura de microservicios y está desarrollado con Spring Boot.
+Este microservicio se encarga de la **gestión del catálogo de productos**, permitiendo crear, editar, consultar y eliminar productos.  
+Forma parte de una arquitectura de microservicios y está desarrollado con **Spring Boot**.
 
-📦 Tecnologías
-Java 17+
+---
 
-Spring Boot 
+## 📦 Tecnologías
 
-Spring Data JPA
+- Java 17+  
+- Spring Boot  
+- Spring Data JPA  
+- PostgreSQL (Neon Database)  
+- Maven  
+- Docker  
+- Lombok  
 
-PostgreSQL (Neon Database)
+---
 
-Maven
+## ⚙️ Configuración
 
-Lombok
+### Variables de entorno requeridas
 
-⚙️ Configuración
-Variables de entorno requeridas
 Asegúrate de definir las siguientes variables de entorno:
 
-Variable	Descripción	Ejemplo
-DB_URL	URL de conexión a la base de datos Neon	[jdbc:postgresql://ep-xyz.us-east-2.aws.neon.tech/productdb](https://console.neon.tech/app/projects/orange-bread-10311465)
+| Variable   | Descripción                             | Ejemplo                                                                 |
+|------------|-----------------------------------------|-------------------------------------------------------------------------|
+| DB_URL     | URL de conexión a la base de datos Neon | [jdbc:postgresql://ep-xyz.us-east-2.aws.neon.tech/productdb](https://console.neon.tech/app/projects/orange-bread-10311465) |
 
+---
 
-🚀 Endpoints principales
-Método	Endpoint	Descripción
-POST	/product/create	Crea un nuevo producto
-PUT	/product/edit/{id}	Edita un producto existente
-DELETE	/product/delete/{id}	Elimina un producto por su ID
-GET	/product/search/{id}	Busca un producto por su ID
-GET	/product/all	Lista todos los productos
+## 🚀 Endpoints principales
 
-Base URL por defecto: http://localhost:8080
+| Método | Endpoint                | Descripción                     |
+|--------|-------------------------|---------------------------------|
+| POST   | `/product/create`       | Crea un nuevo producto          |
+| PUT    | `/product/edit/{id}`    | Edita un producto existente     |
+| DELETE | `/product/delete/{id}`  | Elimina un producto por su ID   |
+| GET    | `/product/search/{id}`  | Busca un producto por su ID     |
+| GET    | `/product/all`          | Lista todos los productos       |
 
-🛡️ Seguridad
-Nota: Este microservicio puede integrarse con un microservicio de autenticación para proteger sus endpoints.
+**Base URL por defecto:** `http://localhost:8080`
 
-Los endpoints pueden estar protegidos con JWT (según configuración global).
+---
+
+## 🛡️ Seguridad
+
+> **Nota:** Este microservicio puede integrarse con un microservicio de autenticación para proteger sus endpoints.
+
+- Los endpoints pueden estar protegidos con **JWT**, según la configuración global.
+- El token debe enviarse en la cabecera:  
+  `Authorization: Bearer <token>`
