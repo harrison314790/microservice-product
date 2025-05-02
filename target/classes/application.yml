@@ -2,13 +2,11 @@ server:
   port: 8080
 
 spring:
-  application:
-    name: msvc-product
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/productDb
-    username: postgres
-    password: 123456789
+    url: jdbc:postgresql://ep-damp-cherry-a5798pvi-pooler.us-east-2.aws.neon.tech:5432/desarollo_db?sslmode=require
+    username: desarollo_db_owner
+    password: npg_umfSx01teTcB
   jpa:
     hibernate:
       ddl-auto: create
