@@ -2,6 +2,7 @@ package com.microservice.product.service;
 
 import com.microservice.product.entities.Product;
 import com.microservice.product.persistence.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements IProductService{
 
+    @Autowired
     private ProductRepository productRepository;
 
 
