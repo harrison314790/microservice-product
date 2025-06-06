@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Entity // <-- Esta anotación faltaba
+@Entity
 @Table(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor

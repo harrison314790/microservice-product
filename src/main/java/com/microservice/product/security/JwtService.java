@@ -1,9 +1,10 @@
-package com.microservice.product.segurity;
+/*package com.microservice.product.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,4 +41,4 @@ public class JwtService {
                 .getBody();
     }
 }
-
+*/

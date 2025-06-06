@@ -14,7 +14,7 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @GetMapping("/search/{id}")
+    @GetMapping("/search/{id}") //buscar por id
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         Product product = productService.findById(id);
         if (product != null) {
@@ -24,7 +24,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}") //eliminar por id
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         Product product = productService.findById(id);
         if (product != null) {
@@ -35,7 +35,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/edit/{id}") //editar por id
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
         Product existingProduct = productService.findById(id);
         if (existingProduct != null) {
@@ -53,15 +53,14 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create") //crear producto
     @ResponseStatus(HttpStatus.CREATED)
     public void saveProduct(@RequestBody Product product){
         productService.save(product);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all") //extraer rodos los productos
     public ResponseEntity<?> findAllProduct(){
         return ResponseEntity.ok(productService.findAll());
     }
-
 }
