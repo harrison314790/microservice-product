@@ -29,18 +29,36 @@ Asegúrate de definir las siguientes variables de entorno:
 
 ---
 
-## 🚀 Endpoints principales
 
-| Método | Endpoint                | Descripción                     |
-|--------|-------------------------|---------------------------------|
-| POST   | `/product/create`       | Crea un nuevo producto          |
-| PUT    | `/product/edit/{id}`    | Edita un producto existente     |
-| DELETE | `/product/delete/{id}`  | Elimina un producto por su ID   |
-| GET    | `/product/search/{id}`  | Busca un producto por su ID     |
-| GET    | `/product/all`          | Lista todos los productos       |
+## 🔐 Credenciales de prueba
+
+| Usuario  | Rol       | Contraseña |
+|----------|-----------|------------|
+| harrison | ADMIN     | 1234       |
+| juan     | CLIENT    | 1234       |
+| camilo   | DELIVERER | 1234       |
+
+---
+
+## 🌐 Rutas disponibles
+
+| Método | Endpoint                 | Roles permitidos          | Descripción                    |
+|--------|--------------------------|----------------------------|--------------------------------|
+| GET    | `/product/all`           | ADMIN, CLIENT, DELIVERER   | Obtener todos los productos    |
+| GET    | `/product/search/{id}`   | ADMIN, CLIENT, DELIVERER   | Buscar un producto por ID      |
+| DELETE | `/product/delete/{id}`   | ADMIN                      | Eliminar un producto por ID    |
+| PUT    | `/product/edit/{id}`     | ADMIN                      | Editar un producto             |
+| POST   | `/product/create`        | ADMIN                      | Crear un nuevo producto        |
+
 
 **Base URL por defecto:** `http://localhost:8080`
 
+---
+## 🚀 Cómo ejecutar el microservicio con Docker
+
+```bash
+docker build -t producto-service .
+docker run -p 8080:8080 producto-service
 ---
 
 ## 🛡️ Seguridad
