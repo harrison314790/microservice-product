@@ -18,8 +18,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.NoOpAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 import java.util.ArrayList;
@@ -28,30 +26,33 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-
 public class SecurityConfig {
-
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
-
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
+                    // Permite acceso público a Swagger
+                    http.requestMatchers(
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/swagger-resources/**",
+                            "/webjars/**").permitAll();
+
+                    // Configuración de rutas de productos
                     http.requestMatchers(HttpMethod.GET, "/product/search/{id}").hasAnyRole("ADMIN", "CLIENT", "DELIVERER");
                     http.requestMatchers(HttpMethod.DELETE, "/product/delete/{id}").hasRole("ADMIN");
                     http.requestMatchers(HttpMethod.PUT, "/product/edit/{id}").hasRole("ADMIN");
                     http.requestMatchers(HttpMethod.POST, "/product/create").hasRole("ADMIN");
                     http.requestMatchers(HttpMethod.GET, "/product/all").hasAnyRole("ADMIN", "CLIENT", "DELIVERER");
 
-
                     http.anyRequest().denyAll();
                 })
                 .build();
-
     }
 
     @Bean
@@ -60,14 +61,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService());
         return provider;
     }
 
-    public UserDetailsService userDetailsService(){
+    @Bean
+    public UserDetailsService userDetailsService() {
         List<UserDetails> userDetailsList = new ArrayList<>();
 
         userDetailsList.add(User.withUsername("harrison")
@@ -88,7 +90,8 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(userDetailsList);
     }
 
-    public PasswordEncoder passwordEncoder(){
+    @Bean
+    public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 }
