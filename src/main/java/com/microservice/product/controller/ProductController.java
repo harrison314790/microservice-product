@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/product")
@@ -54,9 +57,17 @@ public class ProductController {
     }
 
     @PostMapping("/create") //crear producto
-    @ResponseStatus(HttpStatus.CREATED)
-    public void saveProduct(@RequestBody Product product){
-        productService.save(product);
+    public ResponseEntity<Void> saveProduct(@RequestBody Product product){
+        Product savedProduct = productService.save(product);
+        
+        // Crear la URI del recurso creado
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedProduct.getId())
+                .toUri();
+        
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/all") //extraer rodos los productos
