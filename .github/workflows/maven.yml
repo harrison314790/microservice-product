@@ -36,9 +36,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Build with Maven
+      - name: Verify Maven dependencies (opcional para debug)
+        run: mvn dependency:tree
+
+      - name: Compile and package with Maven
         run: mvn clean package
 
       - name: Build Docker image
         run: docker build -t product_service:${{ github.sha }} .
+
+
 
