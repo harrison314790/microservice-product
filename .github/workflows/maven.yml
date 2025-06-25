@@ -1,0 +1,55 @@
+name: CI Product Service
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Verify Maven dependencies
+        run: mvn dependency:tree
+
+      - name: Compile with Maven (con Lombok habilitado)
+        run: mvn clean compile -X
+
+      - name: Run tests (opcional)
+        run: mvn test
+
+      - name: Package JAR
+        run: mvn package -DskipTests
+
+      - name: Build Docker image
+        run: docker build -t product_service:${{ github.sha }} .
+
+
+
